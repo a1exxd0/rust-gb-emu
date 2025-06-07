@@ -39,6 +39,22 @@ pub struct Cpu {
     sp: u16,
     pc: u16,
 
-    // memory of size 2^16, 64KB
+    /// memory of size 2^16, 64KB
+    /// 
+    /// not accurate to hardware but this keeps everything simple
+    /// for the sake of addressing.
+    /// 
+    /// - `0x0000-0x3FFF` 16KiB ROM bank 00
+    /// - `0x4000-0x7FFF` 16KiB ROM Bank-01NN 
+    /// - `0x8000-0x9FFF` 8KiB VRAM 
+    /// - `0xA000-0xBFFF` 8KiB external RAM 
+    /// - `0xC000-0xCFFF` 4KiB Work RAM 
+    /// - `0xD000-0xDFFF` 4KiB Work RAM 
+    /// - `0xE000-0xFDFF` Echo RAM (mirror 0xC000-0xDDFF) 
+    /// - `0xFE00-0xFE9F` Object Attribute Memory 
+    /// - `0xFEA0-0xFEFF` Not usable 
+    /// - `0xFF00-0xFF7F` IO registers 
+    /// - `0xFF80-0xFFFE` High RAM 
+    /// -` 0xFFFF-0xFFFF` Interrupt Enable register (IE)
     memory: [u8; 0x10000],
 }
